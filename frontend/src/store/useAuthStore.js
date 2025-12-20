@@ -26,8 +26,7 @@ export const useAuthStore = create((set, get) => ({
 
 
 
-    const socketURL = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5001`;
-    const newSocket = io(socketURL, {
+    const newSocket = io(`http://${window.location.hostname}:5001`, {
       withCredentials: true,
       query: { userId: authUser._id }, // send userId to backend
     });
