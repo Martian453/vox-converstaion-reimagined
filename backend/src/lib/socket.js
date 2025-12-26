@@ -12,6 +12,7 @@ const userSocketMap = new Map();
 export const io = new Server(server, {
   cors: {
     origin: (origin, callback) => {
+      console.log("🔌 Socket CORS Check:", origin);
       if (
         !origin ||
         origin.startsWith("http://localhost") ||
@@ -20,6 +21,7 @@ export const io = new Server(server, {
       ) {
         callback(null, true);
       } else {
+        console.log("❌ Socket CORS Blocked:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },

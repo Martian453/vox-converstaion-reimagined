@@ -35,6 +35,7 @@ app.use(
       ) {
         callback(null, true);
       } else {
+        console.log("❌ CORS Blocked:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
@@ -47,14 +48,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/translate", translatorRoutes);
 app.use("/api/users", userRoutes);
-
-// Serve frontend in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
-  });
-}
+// Removed static file serving for hybrid deployment
 
 // Start the server and connect to DB
 const PORT = process.env.PORT || 5000;
