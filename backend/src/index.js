@@ -22,6 +22,7 @@ const __dirname = path.dirname(__filename);
 
 // Middleware
 app.use(express.json());
+app.set("trust proxy", 1); // Trust Render's proxy for secure cookies
 app.use(cookieParser());
 app.use(
   cors({
