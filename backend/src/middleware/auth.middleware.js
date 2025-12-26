@@ -3,7 +3,12 @@ import User from "../models/user.model.js";
 
 export const protectRoute = async (req, res, next) => {
   try {
-    const token = req.cookies.jwt;
+    let token = req.cookies.jwt;
+
+    // Fallback: Check Authorization header
+    if (!token && req.headers.authorization?.startsWith("Bearer ")) {
+      token = req.headers.authorization.split(" ")[1];
+    }
     console.log("🔍 Auth Debug - Origin:", req.headers.origin);
     console.log("🔍 Auth Debug - Cookies:", req.cookies);
     console.log("🔍 Auth Debug - JWT Token:", token);

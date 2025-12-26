@@ -61,6 +61,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       const res = await axiosInstance.post("/auth/signup", formData);
       set({ authUser: res.data });
+      localStorage.setItem("jwt", res.data.token); // Save token
       toast.success("Account created successfully");
       get().connectSocket(); // connect socket after signup
     } catch (error) {
@@ -77,6 +78,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       const res = await axiosInstance.post("/auth/login", formData);
       set({ authUser: res.data });
+      localStorage.setItem("jwt", res.data.token); // Save token
       toast.success("Logged in successfully");
       get().connectSocket(); // connect socket after login
     } catch (error) {
@@ -113,6 +115,7 @@ export const useAuthStore = create((set, get) => ({
       const { socket } = get();
       if (socket) socket.disconnect(); // ✅ close socket on logout
       set({ authUser: null, onlineUsers: [], socket: null });
+      localStorage.removeItem("jwt"); // Remove token
       toast.success("Logged out successfully");
     } catch (err) {
       console.error("Logout error:", err.message);

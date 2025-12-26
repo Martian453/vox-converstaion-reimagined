@@ -28,7 +28,8 @@ export const signup = async (req, res) => {
     });
 
     await newUser.save();
-    generateToken(newUser._id, res);
+    await newUser.save();
+    const token = generateToken(newUser._id, res);
 
     res.status(201).json({
       _id: newUser._id,
@@ -36,6 +37,7 @@ export const signup = async (req, res) => {
       email: newUser.email,
       profilePic: newUser.profilePic,
       preferredLanguage: newUser.preferredLanguage,
+      token, // Send token to client
     });
   } catch (error) {
     console.log("Error in signup controller", error.message);
@@ -52,7 +54,7 @@ export const login = async (req, res) => {
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
 
-    generateToken(user._id, res);
+    const token = generateToken(user._id, res);
 
     res.status(200).json({
       _id: user._id,
@@ -60,6 +62,7 @@ export const login = async (req, res) => {
       email: user.email,
       profilePic: user.profilePic,
       preferredLanguage: user.preferredLanguage,
+      token, // Send token to client
     });
   } catch (error) {
     console.log("Error in login controller", error.message);
