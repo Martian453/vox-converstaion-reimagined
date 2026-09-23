@@ -2,6 +2,9 @@
 
 A MERN stack application for real-time chat with instant language translation.
 
+<img width="595" height="675" alt="image" src="https://github.com/user-attachments/assets/1226f509-8edc-4551-a468-0ed04bf59874" />
+
+
 ## Features
 - Real-time messaging with Socket.IO
 - Automatic translation using LibreTranslate
